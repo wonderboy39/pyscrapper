@@ -1,0 +1,33 @@
+{% extends 'masterpage.html' %}
+{% block content %}
+    <h1> chart.html 페이지 </h1>
+    <div id="app_weather">
+        <h1> 날짜 </h1>
+        <ul>
+{#            {% for data in day %}#}
+{#                <li><h4> date : {{ data }} </h4></li>#}
+{#            {% endfor %}#}
+            <li v-for="d in {{ day }}">
+                <h4> Day - [[ d ]] </h4>
+            </li>
+        </ul>
+        <br/>
+
+        <h1> 기온 변화 </h1>
+        <ul>
+            {% for data in temperature %}
+                <li><h4> 온도 : {{ data }} </h4></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+    var app_weather = new Vue({
+        delimiters: ['[[', ']]'],
+        el:'#app_weather',
+        data:{
+            day : {{ day }},
+            temperature : {{ temperature }}
+        }
+    })
+    </script>
+{% endblock %}
