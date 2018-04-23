@@ -1,33 +1,43 @@
 {% extends 'masterpage.html' %}
 {% block content %}
-    <h1> chart.html 페이지 </h1>
-    <div id="app_weather">
-        <h1> 날짜 </h1>
-        <ul>
-{#            {% for data in day %}#}
-{#                <li><h4> date : {{ data }} </h4></li>#}
-{#            {% endfor %}#}
-            <li v-for="d in {{ day }}">
-                <h4> Day - [[ d ]] </h4>
-            </li>
-        </ul>
-        <br/>
-
-        <h1> 기온 변화 </h1>
-        <ul>
-            {% for data in temperature %}
-                <li><h4> 온도 : {{ data }} </h4></li>
-            {% endfor %}
-        </ul>
+    <div class="header container" style="width:400px; padding:15px">
+        <h1>   </h1>
     </div>
+    <div id="container" class="body container" stype="width:400px; height: 400px; margin: 0 auto"></div>
     <script>
-    var app_weather = new Vue({
-        delimiters: ['[[', ']]'],
-        el:'#app_weather',
-        data:{
-            day : {{ day }},
-            temperature : {{ temperature }}
-        }
-    })
+        Highcharts.chart('container', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: '일별 기온변화'
+            },
+            subtitle: {
+                text: '출처 : kma.go.kr'
+            },
+            xAxis: {
+                categories: {{ time_unit }}
+            },
+            yAxis: {
+                title: {
+                    text: '온도 (°C)'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: '서울',
+                data: {{ data1 }}
+            }, {
+                name: '판교',
+                data: {{ data2 }}
+            }]
+        });
     </script>
 {% endblock %}
